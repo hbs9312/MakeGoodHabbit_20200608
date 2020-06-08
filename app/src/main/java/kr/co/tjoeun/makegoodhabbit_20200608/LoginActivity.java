@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import kr.co.tjoeun.makegoodhabbit_20200608.databinding.ActivityLoginBinding;
+import kr.co.tjoeun.makegoodhabbit_20200608.utils.ContextUtil;
 import kr.co.tjoeun.makegoodhabbit_20200608.utils.ServerUtil;
 
 public class LoginActivity extends BaseActivity {
@@ -27,6 +29,13 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+
+        binding.autoLoginCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ContextUtil.setIsAutoLogin(mContext, isChecked);
+            }
+        });
 
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,8 +55,14 @@ public class LoginActivity extends BaseActivity {
 
                             if(code == 200) {
 
+                                JSONObject data = json.getJSONObject("data");
+                                String token = data.getString("token");
+
+                                ContextUtil.setUserToken(mContext, token);
+
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 startActivity(intent);
+                                finish();
 
 
                             }

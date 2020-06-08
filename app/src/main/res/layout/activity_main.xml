@@ -7,13 +7,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp"
         tools:context=".MainActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ListView
+            android:id="@+id/projectListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/logoutBtn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="메인 화면" />
+            android:text="로그아웃" />
 
     </LinearLayout>
 

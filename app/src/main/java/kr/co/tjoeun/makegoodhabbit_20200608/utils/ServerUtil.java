@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import kr.co.tjoeun.makegoodhabbit_20200608.MainActivity;
+import kr.co.tjoeun.makegoodhabbit_20200608.datas.Project;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -30,6 +32,89 @@ public class ServerUtil {
 
     }
 
+    public static void getRequestProjectById (Context context, int id, final JsonResponseHandler handler) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/project/" + id).newBuilder();
+
+        String completeUrl = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(completeUrl)
+                .header("X-Http-token", ContextUtil.getUserToken(context))
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                String body = response.body().string();
+
+                try {
+                    JSONObject json = new JSONObject(body);
+
+                    if(handler != null) {
+                        handler.onResponse(json);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+    }
+
+    public static void getRequestProjects(Context context, final JsonResponseHandler handler) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/project").newBuilder();
+
+        String completeUrl = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(completeUrl)
+                .header("X-Http-Token", ContextUtil.getUserToken(context))
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                String body = response.body().string();
+
+                try {
+                    JSONObject json = new JSONObject(body);
+
+                    if(handler != null) {
+                        handler.onResponse(json);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+    }
 
     public static void postRequestLogin(Context context, String email, String pw, final JsonResponseHandler handler) {
 
