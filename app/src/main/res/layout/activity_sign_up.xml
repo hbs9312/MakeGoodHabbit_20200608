@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_height="match_parent"
+        tools:context=".SignUpActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="아이디" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/emailEdt"
+                android:layout_marginTop="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="textEmailAddress"
+                android:hint="이메일을 입력하세요." />
+            <Button
+                android:id="@+id/idDuplCheckBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="중복검사" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/idCheckResultTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디 중복검사를 해주세요." />
+
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호"
+            android:textColor="@color/black" />
+
+        <EditText
+            android:id="@+id/pwEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호를 입력하세요."
+            android:inputType="textPassword"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/pwResultTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호를 입력하세요." />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 확인"
+            android:textColor="@color/black" />
+
+        <EditText
+            android:id="@+id/pwRepeatEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="비밀번호를 한번 더 입력하세요."
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호를 입력하세요." />
+
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+
+            <EditText
+                android:id="@+id/nickEdt"
+                android:layout_marginTop="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="닉네임을 입력하세요." />
+            <Button
+                android:id="@+id/nickDuplCheckBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="중복검사" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/nickCheckResultTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임 중복검사를 해주세요." />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/signUpBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원가입" />
+
+
+
+
+    </LinearLayout>
+
+</layout>

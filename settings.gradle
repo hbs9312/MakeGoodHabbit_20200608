@@ -1,0 +1,2 @@
+rootProject.name='MakeGoodHabbit_20200608'
+include ':app'
