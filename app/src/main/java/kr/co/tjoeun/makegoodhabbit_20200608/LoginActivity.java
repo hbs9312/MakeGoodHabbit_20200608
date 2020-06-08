@@ -46,6 +46,8 @@ public class LoginActivity extends BaseActivity {
 
                             if(code == 200) {
 
+                                Intent intent = new Intent(mContext, MainActivity.class);
+                                startActivity(intent);
 
 
                             }
