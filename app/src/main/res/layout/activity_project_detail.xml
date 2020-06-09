@@ -33,6 +33,37 @@
 
         </FrameLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/contentTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="본문글" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/applyBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="신청하기" />
+
+        <Button
+            android:id="@+id/showProofBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="다른사람 인증내역 보기" />
+
+        <Button
+            android:id="@+id/goToProofBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="인증하기" />
 
     </LinearLayout>
 

@@ -8,6 +8,7 @@ public class Project {
     private int id;
     private String title;
     private String imgUrl;
+    private String description;
 
     public static Project getProjectFromJson(JSONObject jsonObject) {
         Project project = new Project();
@@ -16,6 +17,7 @@ public class Project {
             project.id = jsonObject.getInt("id");
             project.title = jsonObject.getString("title");
             project.imgUrl = jsonObject.getString("img_url");
+            project.description = jsonObject.getString("description");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -56,5 +58,13 @@ public class Project {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

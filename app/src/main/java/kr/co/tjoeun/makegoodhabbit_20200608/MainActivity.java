@@ -4,11 +4,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +46,6 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setupEvents() {
 
-
         binding.projectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -55,24 +58,12 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-
-        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                ContextUtil.deleteUserToken(mContext);
-
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                startActivity(intent);
-                finish();
-
-            }
-        });
     }
 
     @Override
     public void setValues() {
+
+        tedPermission();
 
         projectAdapter = new ProjectAdapter(mContext, R.layout.project_list_item, projectList);
         binding.projectListView.setAdapter(projectAdapter);
@@ -90,7 +81,6 @@ public class MainActivity extends BaseActivity {
                     for(int i=0; i < projects.length(); i++) {
 
                         JSONObject projectObj = projects.getJSONObject(i);
-
                         Project tempProject =  Project.getProjectFromJson(projectObj);
                         projectList.add(tempProject);
 
@@ -113,5 +103,27 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void tedPermission() {
+
+        PermissionListener pl = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+
+            }
+        };
+
+        TedPermission.with(mContext)
+                .setPermissionListener(pl)
+                .setRationaleMessage(getResources().getString(R.string.permission02))
+                .setDeniedMessage(getResources().getString(R.string.permission01))
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
     }
 }

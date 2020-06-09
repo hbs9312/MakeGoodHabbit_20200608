@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:context=".ProofActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="프로젝트"/>
+
+        <TextView
+            android:id="@+id/projectTitleTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="클릭한 프로젝트명" />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증내용" />
+
+        <EditText
+            android:id="@+id/contentTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="5"
+            android:gravity="top"
+            android:hint="내용을 입력하세요."/>
+
+        <ImageView
+            android:id="@+id/proofImg"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@mipmap/ic_launcher" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/uploadImgBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사진 올리기" />
+
+
+        <Button
+            android:id="@+id/proofBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="인증하기" />
+
+    </LinearLayout>
+
+</layout>

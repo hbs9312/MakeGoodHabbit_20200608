@@ -1,11 +1,11 @@
 package kr.co.tjoeun.makegoodhabbit_20200608;
 
-import androidx.constraintlayout.solver.GoalRow;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -15,7 +15,6 @@ import org.json.JSONObject;
 
 import kr.co.tjoeun.makegoodhabbit_20200608.databinding.ActivityProjectDetailBinding;
 import kr.co.tjoeun.makegoodhabbit_20200608.datas.Project;
-import kr.co.tjoeun.makegoodhabbit_20200608.utils.ContextUtil;
 import kr.co.tjoeun.makegoodhabbit_20200608.utils.ServerUtil;
 
 public class ProjectDetailActivity extends BaseActivity {
@@ -35,6 +34,48 @@ public class ProjectDetailActivity extends BaseActivity {
     @Override
     public void setupEvents() {
 
+        binding.showProofBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(mContext, ViewProofActivity.class);
+                intent.putExtra("projectId", mProject.getId());
+                startActivity(intent);
+
+            }
+        });
+
+        binding.goToProofBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ProofActivity.class);
+                intent.putExtra("project_id", mProject.getId());
+                startActivity(intent);
+            }
+        });
+
+        binding.applyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ServerUtil.postRequestJoin(mContext, projectId, new ServerUtil.JsonResponseHandler() {
+                    @Override
+                    public void onResponse(JSONObject json) {
+
+                        Log.d("프로젝트신청", json.toString());
+                        try {
+                            JSONObject data = json.getJSONObject("data");
+                            String message = json.getString("message");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+            }
+        });
     }
 
     @Override
@@ -87,6 +128,8 @@ public class ProjectDetailActivity extends BaseActivity {
 
         binding.projectTitleTxt.setText(mProject.getTitle());
         Glide.with(mContext).load(mProject.getImgUrl()).into(binding.projectImg);
+
+        binding.contentTxt.setText(mProject.getDescription());
 
     }
 }

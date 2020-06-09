@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Date;
 
 import kr.co.tjoeun.makegoodhabbit_20200608.MainActivity;
 import kr.co.tjoeun.makegoodhabbit_20200608.datas.Project;
@@ -37,6 +38,51 @@ public class ServerUtil {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/project/" + id).newBuilder();
+
+        String completeUrl = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(completeUrl)
+                .header("X-Http-token", ContextUtil.getUserToken(context))
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                String body = response.body().string();
+
+                try {
+                    JSONObject json = new JSONObject(body);
+
+                    if(handler != null) {
+                        handler.onResponse(json);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+    }
+
+    public static void getRequestProjectByDate (Context context, int projectId, String date, final JsonResponseHandler handler) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/project/" + projectId).newBuilder();
+        urlBuilder.addEncodedQueryParameter("proof_date", date);
+
 
         String completeUrl = urlBuilder.build().toString();
 
@@ -161,6 +207,51 @@ public class ServerUtil {
 
     }
 
+    public static void postRequestJoin(Context context, int projectId, final JsonResponseHandler handler) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("project_id", projectId+"")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/project")
+                .post(requestBody)
+                .header("X-Http-Token", ContextUtil.getUserToken(context))
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                String body = response.body().string();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(body);
+
+                    if (handler != null) {
+
+                        handler.onResponse(jsonObject);
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
+
+
     public static void putRequestSignUp(Context context, String email, String pw, String nickName, final JsonResponseHandler handler) {
 
         OkHttpClient client = new OkHttpClient();
@@ -175,6 +266,51 @@ public class ServerUtil {
                 .url(BASE_URL + "/user")
                 .put(requestBody)
 //                .header()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                String body = response.body().string();
+
+                Log.d("서버연결성공", body);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(body);
+
+                    if(handler != null) {
+                        handler.onResponse(jsonObject);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+
+    }
+
+    public static void putRequestProjectProof(Context context, String token,int projectId, String content,final JsonResponseHandler handler) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("project_id", projectId + "")
+                .add("content", content)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/project_proof")
+                .put(requestBody)
+                .header("X-Http-Token", token)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
