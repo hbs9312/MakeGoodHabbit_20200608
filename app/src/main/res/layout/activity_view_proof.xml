@@ -15,15 +15,18 @@
             android:layout_height="wrap_content"
             android:text="날짜별 인증내역 보기" />
 
-        <DatePicker
-            android:id="@+id/datePick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <ListView
             android:id="@+id/proofByDateListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/selectDateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="날짜 선택하기" />
 
 
 

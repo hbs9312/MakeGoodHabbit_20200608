@@ -1,10 +1,8 @@
 package kr.co.tjoeun.makegoodhabbit_20200608;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,13 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import kr.co.tjoeun.makegoodhabbit_20200608.databinding.ActivityProofBinding;
 import kr.co.tjoeun.makegoodhabbit_20200608.datas.Project;
@@ -62,7 +55,7 @@ public class ProofActivity extends BaseActivity {
 
                 String content = binding.contentTxt.getText().toString();
 
-                ServerUtil.putRequestProjectProof(mContext, ContextUtil.getUserToken(mContext), projectId, content, new ServerUtil.JsonResponseHandler() {
+                ServerUtil.postRequestProjectProof(mContext, ContextUtil.getUserToken(mContext), projectId, content, new ServerUtil.JsonResponseHandler() {
                     @Override
                     public void onResponse(JSONObject json) {
 
@@ -70,15 +63,16 @@ public class ProofActivity extends BaseActivity {
 
                         try {
                             final String message = json.getString("message");
-
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
+                            int code = json.getInt("code");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            if (code == 200) {
+                                finish();
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();

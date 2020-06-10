@@ -2,6 +2,8 @@ package kr.co.tjoeun.makegoodhabbit_20200608;
 
 import androidx.databinding.DataBindingUtil;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,21 +60,35 @@ public class ProjectDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                ServerUtil.postRequestJoin(mContext, projectId, new ServerUtil.JsonResponseHandler() {
+                AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
+                alert.setTitle("프로젝트 신청");
+                alert.setMessage("정말 이 프로젝트를 신청하시겠습니까?");
+                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(JSONObject json) {
-
-                        Log.d("프로젝트신청", json.toString());
-                        try {
-                            JSONObject data = json.getJSONObject("data");
-                            String message = json.getString("message");
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+                    public void onClick(DialogInterface dialog, int which) {
+                        applyProject();
                     }
                 });
+                alert.setNegativeButton("취소", null);
+                alert.show();
+
+//                ServerUtil.postRequestJoin(mContext, projectId, new ServerUtil.JsonResponseHandler() {
+//                    @Override
+//                    public void onResponse(JSONObject json) {
+//
+//                        Log.d("프로젝트신청", json.toString());
+//                        try {
+//                            JSONObject data = json.getJSONObject("data");
+//                            int code = json.getInt("code");
+//                            String message = json.getString("message");
+//
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                });
 
             }
         });
@@ -130,6 +146,36 @@ public class ProjectDetailActivity extends BaseActivity {
         Glide.with(mContext).load(mProject.getImgUrl()).into(binding.projectImg);
 
         binding.contentTxt.setText(mProject.getDescription());
+
+    }
+
+    void applyProject () {
+
+        ServerUtil.postRequestJoin(mContext, projectId, new ServerUtil.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+
+                Log.d("프로젝트신청", json.toString());
+                try {
+                    int code = json.getInt("code");
+//                    JSONObject data = json.getJSONObject("data");
+                    final String message = json.getString("message");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
     }
 }

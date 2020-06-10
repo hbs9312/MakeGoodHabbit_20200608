@@ -1,14 +1,17 @@
 package kr.co.tjoeun.makegoodhabbit_20200608.datas;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Proof {
 
     private int id;
     private String content;
-    private String imgUrl;
-
+    private List<Image> imgList = new ArrayList<>();
 
     public static Proof getProofFromJson(JSONObject jsonObject) {
         Proof pr = new Proof();
@@ -16,7 +19,20 @@ public class Proof {
         try {
             pr.id = jsonObject.getInt("id");
             pr.content = jsonObject.getString("content");
-            pr.imgUrl = jsonObject.getString("img_url");
+
+            if (!jsonObject.isNull("images")) {
+
+                JSONArray images = jsonObject.getJSONArray("images");
+
+                for(int i=0; i< images.length();i++) {
+                    JSONObject imageObj = images.getJSONObject(i);
+                    Image tempImg = Image.getImageFromJson(imageObj);
+                    pr.imgList.add(tempImg);
+                }
+
+            }
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -29,10 +45,9 @@ public class Proof {
 
     }
 
-    public Proof(int id, String content, String imgUrl) {
+    public Proof(int id, String content) {
         this.id = id;
         this.content = content;
-        this.imgUrl = imgUrl;
     }
 
     public String getContent() {
@@ -43,13 +58,6 @@ public class Proof {
         this.content = content;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
 
     public int getId() {
         return id;
@@ -57,5 +65,13 @@ public class Proof {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Image> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<Image> imgList) {
+        this.imgList = imgList;
     }
 }

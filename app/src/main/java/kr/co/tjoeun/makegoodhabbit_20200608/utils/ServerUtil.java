@@ -236,9 +236,7 @@ public class ServerUtil {
                     JSONObject jsonObject = new JSONObject(body);
 
                     if (handler != null) {
-
                         handler.onResponse(jsonObject);
-
                     }
 
 
@@ -298,7 +296,7 @@ public class ServerUtil {
 
     }
 
-    public static void putRequestProjectProof(Context context, String token,int projectId, String content,final JsonResponseHandler handler) {
+    public static void postRequestProjectProof(Context context, String token, int projectId, String content, final JsonResponseHandler handler) {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -309,7 +307,7 @@ public class ServerUtil {
 
         Request request = new Request.Builder()
                 .url(BASE_URL + "/project_proof")
-                .put(requestBody)
+                .post(requestBody)
                 .header("X-Http-Token", token)
                 .build();
 

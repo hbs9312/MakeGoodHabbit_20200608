@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -41,8 +44,12 @@ public class ProofAdapter extends ArrayAdapter<Proof> {
         }
 
         TextView proofContentTxt = row.findViewById(R.id.proofContentTxt);
+        ImageView proofImg = row.findViewById(R.id.proofImg);
 
         Proof data = mList.get(position);
+        if(!data.getImgList().isEmpty()){
+            Glide.with(mContext).load(data.getImgList().get(0).getImgUrl()).into(proofImg);
+        }
 
         proofContentTxt.setText(data.getContent());
 
