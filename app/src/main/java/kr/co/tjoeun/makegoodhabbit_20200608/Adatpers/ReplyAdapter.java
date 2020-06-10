@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -66,6 +67,25 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
 
                         Log.d("댓글좋아요응답", json.toString());
 
+                        try {
+                            JSONObject dataObj = json.getJSONObject("data");
+                            JSONObject like = dataObj.getJSONObject("like");
+
+                            data.setLikeCount(like.getInt("like_count"));
+                            data.setMyLike(like.getBoolean("my_like"));
+
+                            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    notifyDataSetChanged();
+
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 });
@@ -85,7 +105,6 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
             likeReplyBtn.setText("좋아요 " + data.getLikeCount());
             likeReplyBtn.setBackgroundResource(R.drawable.blue_border_box);
             likeReplyBtn.setTextColor(Color.BLUE);
-
         }
 
         return row;

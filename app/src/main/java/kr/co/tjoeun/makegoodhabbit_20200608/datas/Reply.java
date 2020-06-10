@@ -99,4 +99,16 @@ public class Reply {
     public boolean isMyLike() {
         return myLike;
     }
+
+    public void setProofId(int proofId) {
+        this.proofId = proofId;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public void setMyLike(boolean myLike) {
+        this.myLike = myLike;
+    }
 }
