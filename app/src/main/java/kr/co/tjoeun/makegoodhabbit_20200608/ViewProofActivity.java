@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 
 import org.json.JSONArray;
@@ -84,7 +85,6 @@ public class ViewProofActivity extends BaseActivity {
                 Calendar selectedDate = Calendar.getInstance();
                 selectedDate.set(year, month, dayOfMonth);
                 String dateStr = sdf.format(selectedDate.getTime());
-
                 getDateFromSever(dateStr);
 
             }

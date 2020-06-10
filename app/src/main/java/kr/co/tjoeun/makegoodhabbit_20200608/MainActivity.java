@@ -93,9 +93,6 @@ public class MainActivity extends BaseActivity {
                         }
                     });
 
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

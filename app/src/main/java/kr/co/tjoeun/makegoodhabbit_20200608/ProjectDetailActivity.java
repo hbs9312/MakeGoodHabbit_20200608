@@ -98,12 +98,10 @@ public class ProjectDetailActivity extends BaseActivity {
     public void setValues() {
 
         projectId = getIntent().getIntExtra("project_id", -1);
-
         if(projectId == -1) {
             Toast.makeText(mContext, "잘못된 접급입니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
-
         getProjectFromSever();
 
 
@@ -160,6 +158,9 @@ public class ProjectDetailActivity extends BaseActivity {
                     int code = json.getInt("code");
 //                    JSONObject data = json.getJSONObject("data");
                     final String message = json.getString("message");
+                    if(code==200) {
+                        mProject.setJoin(true);
+                    }
 
                     runOnUiThread(new Runnable() {
                         @Override

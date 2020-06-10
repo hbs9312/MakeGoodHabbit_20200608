@@ -11,7 +11,10 @@ public class Proof {
 
     private int id;
     private String content;
+    private int likeCount;
+    private boolean myLike;
     private List<Image> imgList = new ArrayList<>();
+
 
     public static Proof getProofFromJson(JSONObject jsonObject) {
         Proof pr = new Proof();
@@ -19,6 +22,8 @@ public class Proof {
         try {
             pr.id = jsonObject.getInt("id");
             pr.content = jsonObject.getString("content");
+            pr.likeCount = jsonObject.getInt("like_count");
+            pr.myLike = jsonObject.getBoolean("my_like");
 
             if (!jsonObject.isNull("images")) {
 
@@ -73,5 +78,21 @@ public class Proof {
 
     public void setImgList(List<Image> imgList) {
         this.imgList = imgList;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public boolean isMyLike() {
+        return myLike;
+    }
+
+    public void setMyLike(boolean myLike) {
+        this.myLike = myLike;
     }
 }

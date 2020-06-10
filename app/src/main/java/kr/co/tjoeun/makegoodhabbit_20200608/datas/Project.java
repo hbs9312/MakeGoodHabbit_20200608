@@ -9,6 +9,7 @@ public class Project {
     private String title;
     private String imgUrl;
     private String description;
+    private boolean isJoin;
 
     public static Project getProjectFromJson(JSONObject jsonObject) {
         Project project = new Project();
@@ -66,5 +67,13 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isJoin() {
+        return isJoin;
+    }
+
+    public void setJoin(boolean join) {
+        isJoin = join;
     }
 }

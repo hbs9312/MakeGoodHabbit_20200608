@@ -34,13 +34,31 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
             <Button
-                android:layout_width="wrap_content"
+                android:focusable="false"
+                android:id="@+id/replyBtn"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:text="댓글" />
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="좋아요" />
+                android:layout_weight="1" />
+
+            <Button
+                android:focusable="false"
+                android:id="@+id/likeBtn"
+                android:layout_width="60dp"
+                android:textSize="12sp"
+                android:textColor="#0000FF"
+                android:layout_height="30dp"
+                android:background="@drawable/blue_border_box"
+                android:text="좋아요 0" />
 
         </LinearLayout>
 

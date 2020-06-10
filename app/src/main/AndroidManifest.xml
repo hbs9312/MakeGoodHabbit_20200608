@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ViewProofActivity"></activity>
+        <activity android:name=".PostReplyActivity"></activity>
+        <activity android:name=".ViewReplyActivity" />
+        <activity android:name=".ViewProofActivity" />
         <activity android:name=".ProofActivity" />
         <activity android:name=".ProjectDetailActivity" />
         <activity android:name=".MainActivity" />
