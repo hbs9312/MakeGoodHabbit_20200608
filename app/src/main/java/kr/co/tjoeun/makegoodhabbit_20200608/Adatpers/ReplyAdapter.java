@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         View row = convertView;
 
@@ -51,35 +52,44 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
             row = inf.inflate(R.layout.reply_list_item,null);
         }
 
-        TextView replyContent = row.findViewById(R.id.replyContent);
-        TextView replyUesrNickTxt = row.findViewById(R.id.replyUserNickTxt);
+        TextView replyUserNickTxt = row.findViewById(R.id.replyUserNickTxt);
+        TextView replyContentTxt = row.findViewById(R.id.replyContent);
         Button likeReplyBtn = row.findViewById(R.id.likeReplyBtn);
 
         final Reply data = mList.get(position);
+
+        replyUserNickTxt.setText(data.getNickName());
+        replyContentTxt.setText(data.getContent());
+
+        Log.d("좋아요 수 조회", data.getLikeCount()+"");
+        likeReplyBtn.setText(String.format("좋아요 %d", data.getLikeCount()));
 
         likeReplyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                ServerUtil.postRequestLikeReply(mContext, data.getProofId(), new ServerUtil.JsonResponseHandler() {
+                ServerUtil.postRequestLikeReply(mContext, data.getId(), new ServerUtil.JsonResponseHandler() {
                     @Override
                     public void onResponse(JSONObject json) {
 
-                        Log.d("댓글좋아요응답", json.toString());
+                        Log.d("댓글 좋아요 응답", json.toString());
 
                         try {
                             JSONObject dataObj = json.getJSONObject("data");
                             JSONObject like = dataObj.getJSONObject("like");
+                            int likeCount = like.getInt("like_count");
+                            boolean myLike = like.getBoolean("my_like");
 
-                            data.setLikeCount(like.getInt("like_count"));
-                            data.setMyLike(like.getBoolean("my_like"));
+                            data.setMyLike(myLike);
+                            data.setLikeCount(likeCount);
+
+                            Log.d("좋아요 수 조회", data.getLikeCount()+"");
+
 
                             new Handler(Looper.getMainLooper()).post(new Runnable() {
                                 @Override
                                 public void run() {
-
                                     notifyDataSetChanged();
-
                                 }
                             });
 
@@ -92,20 +102,6 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
 
             }
         });
-
-        replyContent.setText(data.getContent());
-        replyUesrNickTxt.setText(data.getNickName());
-
-        if(data.isMyLike()) {
-            likeReplyBtn.setText("좋아요 " + data.getLikeCount());
-            likeReplyBtn.setBackgroundResource(R.drawable.red_border_box);
-            likeReplyBtn.setTextColor(Color.RED);
-        }
-        else {
-            likeReplyBtn.setText("좋아요 " + data.getLikeCount());
-            likeReplyBtn.setBackgroundResource(R.drawable.blue_border_box);
-            likeReplyBtn.setTextColor(Color.BLUE);
-        }
 
         return row;
     }

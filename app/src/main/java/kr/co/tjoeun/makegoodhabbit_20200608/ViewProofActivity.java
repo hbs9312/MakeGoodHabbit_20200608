@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,8 @@ public class ViewProofActivity extends BaseActivity {
 
     ActivityViewProofBinding binding;
     int projectId;
+    String projectTitle;
+
     List<Proof> proofList = new ArrayList<>();
     ProofAdapter prAdapter;
     Calendar cal = Calendar.getInstance();
@@ -62,12 +65,25 @@ public class ViewProofActivity extends BaseActivity {
                 showDate();
             }
         });
+
+        binding.proofByDateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int proofId = proofList.get(position).getId();
+                Intent myIntent = new Intent(mContext, ViewProofDetailActivity.class);
+                myIntent.putExtra("proofId", proofId);
+                myIntent.putExtra("projectTitle", projectTitle);
+                startActivity(myIntent);
+
+            }
+        });
     }
 
     @Override
     public void setValues() {
         projectId = getIntent().getIntExtra("projectId", -1);
-
+        projectTitle = getIntent().getStringExtra("projectTitle");
+        binding.projectTitleTxt.setText(projectTitle);
 
         getDateFromSever(sdf.format(cal.getTime()));
 

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ import org.json.JSONObject;
 import java.util.List;
 
 import kr.co.tjoeun.makegoodhabbit_20200608.R;
-import kr.co.tjoeun.makegoodhabbit_20200608.ViewReplyActivity;
 import kr.co.tjoeun.makegoodhabbit_20200608.datas.Proof;
 import kr.co.tjoeun.makegoodhabbit_20200608.utils.ContextUtil;
 import kr.co.tjoeun.makegoodhabbit_20200608.utils.ServerUtil;
@@ -58,7 +56,6 @@ public class ProofAdapter extends ArrayAdapter<Proof> {
         TextView proofContentTxt = row.findViewById(R.id.proofContentTxt);
         ImageView proofImg = row.findViewById(R.id.proofImg);
         Button likeBtn = row.findViewById(R.id.likeBtn);
-        Button replyBtn = row.findViewById(R.id.replyBtn);
 
         final Proof data = mList.get(position);
         final int proofId = data.getId();
@@ -100,16 +97,16 @@ public class ProofAdapter extends ArrayAdapter<Proof> {
             }
         });
 
-        replyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(mContext, ViewReplyActivity.class);
-                intent.putExtra("proofId", proofId);
-                mContext.startActivity(intent);
-
-            }
-        });
+//        replyBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(mContext, ViewReplyActivity.class);
+//                intent.putExtra("proofId", proofId);
+//                mContext.startActivity(intent);
+//
+//            }
+//        });
 
 
         likeBtn.setText("좋아요 " + data.getLikeCount());

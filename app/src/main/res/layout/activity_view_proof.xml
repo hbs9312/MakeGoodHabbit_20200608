@@ -11,9 +11,12 @@
         tools:context=".ViewProofActivity">
 
         <TextView
+            android:id="@+id/projectTitleTxt"
+            android:textSize="20sp"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="날짜별 인증내역 보기" />
+            android:text="프로젝트명" />
 
 
         <ListView

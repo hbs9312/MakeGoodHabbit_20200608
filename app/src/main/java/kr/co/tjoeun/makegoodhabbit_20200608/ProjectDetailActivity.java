@@ -42,6 +42,7 @@ public class ProjectDetailActivity extends BaseActivity {
 
                 Intent intent = new Intent(mContext, ViewProofActivity.class);
                 intent.putExtra("projectId", mProject.getId());
+                intent.putExtra("projectTitle", mProject.getTitle());
                 startActivity(intent);
 
             }
