@@ -3,43 +3,71 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp"
-        tools:context=".ViewProofDetailActivity">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/projectTitleTxt"
-            android:layout_width="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_height="wrap_content"
-            android:text="프로젝트명" />
-
-        <ImageView
-            android:id="@+id/proofImg"
-            android:layout_marginTop="10dp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:src="@mipmap/ic_launcher"
-            android:scaleType="centerCrop" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            tools:context=".ViewProofDetailActivity">
 
-        <TextView
-            android:id="@+id/proofContentTxt"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="인증글 내용이 들어올 자리"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/projectTitleTxt"
+                android:layout_width="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="프로젝트명" />
 
-        <ListView
-            android:id="@+id/proofReplyListView"
+            <ImageView
+                android:id="@+id/proofImg"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/proofContentTxt"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증글 내용이 들어올 자리"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <ListView
+                android:visibility="gone"
+                android:id="@+id/proofReplyListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/replyList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="500dp"
+            android:layout_gravity="bottom"
+            android:orientation="vertical">
+            <fragment
+                class="kr.co.tjoeun.makegoodhabbit_20200608.fagments.ReplyListFragement"
+                android:tag="댓글 프래그먼트"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom" />
 
-    </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/showReplyBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="댓글 보기" />
+    </FrameLayout>
 
 </layout>

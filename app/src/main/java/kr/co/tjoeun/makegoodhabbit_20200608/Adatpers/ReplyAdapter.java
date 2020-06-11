@@ -61,8 +61,8 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
         replyUserNickTxt.setText(data.getNickName());
         replyContentTxt.setText(data.getContent());
 
-        Log.d("좋아요 수 조회", data.getLikeCount()+"");
         likeReplyBtn.setText(String.format("좋아요 %d", data.getLikeCount()));
+
 
         likeReplyBtn.setOnClickListener(new View.OnClickListener() {
             @Override

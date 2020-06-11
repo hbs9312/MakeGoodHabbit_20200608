@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.bumptech.glide.Glide;
 
@@ -38,6 +42,16 @@ public class ViewProofDetailActivity extends BaseActivity {
     @Override
     public void setupEvents() {
 
+        binding.showReplyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Animation slideDown = AnimationUtils.loadAnimation(mContext,R.anim.slide_down);
+
+                binding.replyList.startAnimation(slideDown);
+
+            }
+        });
 
     }
 
@@ -60,6 +74,8 @@ public class ViewProofDetailActivity extends BaseActivity {
 
         replyAdapter = new ReplyAdapter(mContext, R.layout.reply_list_item, replyList);
         binding.proofReplyListView.setAdapter(replyAdapter);
+
+
 
     }
 
