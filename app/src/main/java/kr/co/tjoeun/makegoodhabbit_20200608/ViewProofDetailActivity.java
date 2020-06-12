@@ -42,24 +42,12 @@ public class ViewProofDetailActivity extends BaseActivity {
     @Override
     public void setupEvents() {
 
-        binding.showReplyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Animation slideDown = AnimationUtils.loadAnimation(mContext,R.anim.slide_down);
-
-                binding.replyList.startAnimation(slideDown);
-
-            }
-        });
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        replyList.clear();
         getProofDetailFromServer();
     }
 
@@ -75,8 +63,6 @@ public class ViewProofDetailActivity extends BaseActivity {
         replyAdapter = new ReplyAdapter(mContext, R.layout.reply_list_item, replyList);
         binding.proofReplyListView.setAdapter(replyAdapter);
 
-
-
     }
 
     void getProofDetailFromServer() {
@@ -86,6 +72,7 @@ public class ViewProofDetailActivity extends BaseActivity {
             public void onResponse(JSONObject json) {
 
                 Log.d("인증상세목록조회", json.toString());
+                replyList.clear();
 
                 try {
                     JSONObject data = json.getJSONObject("data");

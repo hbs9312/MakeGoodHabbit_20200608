@@ -12,4 +12,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     abstract public void setupEvents();
     abstract public void setValues();
 
+
 }

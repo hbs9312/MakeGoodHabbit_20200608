@@ -61,7 +61,6 @@ public class ViewProofActivity extends BaseActivity {
                 mYear = cal.get(Calendar.YEAR);
                 mMonth = cal.get(Calendar.MONTH);
                 mDay = cal.get(Calendar.DAY_OF_MONTH);
-                proofList.clear();
                 showDate();
             }
         });
@@ -74,7 +73,6 @@ public class ViewProofActivity extends BaseActivity {
                 myIntent.putExtra("proofId", proofId);
                 myIntent.putExtra("projectTitle", projectTitle);
                 startActivity(myIntent);
-
             }
         });
     }
@@ -90,6 +88,7 @@ public class ViewProofActivity extends BaseActivity {
         prAdapter = new ProofAdapter(mContext,R.layout.proof_list_item, proofList);
         binding.proofByDateListView.setAdapter(prAdapter);
 
+        showDate();
     }
 
     void showDate(){
@@ -97,26 +96,28 @@ public class ViewProofActivity extends BaseActivity {
         DatePickerDialog dialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
+                Log.d("날짜 취소", String.format("%d, %d, %d,", year, month, dayOfMonth));
                 Calendar selectedDate = Calendar.getInstance();
                 selectedDate.set(year, month, dayOfMonth);
                 String dateStr = sdf.format(selectedDate.getTime());
                 getDateFromSever(dateStr);
 
             }
-        }, mYear, mMonth, mDay);
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         dialog.show();
 
     }
 
     void getDateFromSever(String date) {
 
+        Log.d("날짜", date);
         ServerUtil.getRequestProjectByDate(mContext, projectId, date, new ServerUtil.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
 
                 Log.d("날짜별인증조회", json.toString());
 
+                proofList.clear();
                 try {
                     JSONObject data = json.getJSONObject("data");
                     JSONObject project = data.getJSONObject("project");
