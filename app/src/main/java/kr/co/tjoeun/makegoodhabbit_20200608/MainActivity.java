@@ -46,6 +46,15 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setupEvents() {
 
+
+        binding.showReviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(mContext, ViewReviewActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
         binding.projectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -62,6 +71,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+
+        setTitle("프로젝트");
 
         tedPermission();
 

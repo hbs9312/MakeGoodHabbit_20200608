@@ -28,6 +28,7 @@ public class ViewProofDetailActivity extends BaseActivity {
 
     ActivityViewProofDetailBinding binding;
     int proofId;
+    String projectTitle;
     List<Reply> replyList = new ArrayList<>();
     ReplyAdapter replyAdapter;
 
@@ -55,10 +56,13 @@ public class ViewProofDetailActivity extends BaseActivity {
     public void setValues() {
 
         proofId = getIntent().getIntExtra("proofId",-1);
+        projectTitle = getIntent().getStringExtra("projectTitle");
         Log.d("proofid 확인", String.valueOf(proofId));
 
+        setTitle(projectTitle);
+
         String projectTitle = getIntent().getStringExtra("projectTitle");
-        binding.projectTitleTxt.setText(projectTitle);
+//        binding.projectTitleTxt.setText(projectTitle);
 
         replyAdapter = new ReplyAdapter(mContext, R.layout.reply_list_item, replyList);
         binding.proofReplyListView.setAdapter(replyAdapter);

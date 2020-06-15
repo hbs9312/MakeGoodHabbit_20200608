@@ -58,6 +58,7 @@ public class PostReplyActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+        setTitle("댓글 달기");
         proofId = getIntent().getIntExtra("proofId", -1 );
     }
 }

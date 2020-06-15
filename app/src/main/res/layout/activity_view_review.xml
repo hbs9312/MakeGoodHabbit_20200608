@@ -7,33 +7,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".MainActivity">
+        tools:context=".ViewReviewActivity">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" >
 
             <ListView
-                android:id="@+id/projectListView"
+                android:id="@+id/reviewListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
             <Button
-                android:id="@+id/showReviewBtn"
-                android:layout_width="match_parent"
+                android:id="@+id/writeReviewBtn"
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:text="리뷰보기" />
-
-
+                android:text="리뷰 작성" />
         </FrameLayout>
 
 
-        <Button
-            android:id="@+id/logoutBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="로그아웃" />
+<!--        <Button-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="보기" />-->
+
+
 
     </LinearLayout>
 

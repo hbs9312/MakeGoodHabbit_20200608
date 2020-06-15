@@ -79,9 +79,13 @@ public class ViewProofActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+
+
+
         projectId = getIntent().getIntExtra("projectId", -1);
         projectTitle = getIntent().getStringExtra("projectTitle");
-        binding.projectTitleTxt.setText(projectTitle);
+//        binding.projectTitleTxt.setText(projectTitle);
+        setTitle(projectTitle);
 
         getDateFromSever(sdf.format(cal.getTime()));
 

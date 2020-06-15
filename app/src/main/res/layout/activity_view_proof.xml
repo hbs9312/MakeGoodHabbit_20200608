@@ -10,15 +10,6 @@
         android:padding="10dp"
         tools:context=".ViewProofActivity">
 
-        <TextView
-            android:id="@+id/projectTitleTxt"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="프로젝트명" />
-
-
         <ListView
             android:id="@+id/proofByDateListView"
             android:layout_width="match_parent"

@@ -4,6 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,6 +16,12 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import kr.co.tjoeun.makegoodhabbit_20200608.databinding.ActivityProofBinding;
 import kr.co.tjoeun.makegoodhabbit_20200608.datas.Project;
@@ -24,6 +33,8 @@ public class ProofActivity extends BaseActivity {
     ActivityProofBinding binding;
     int projectId;
     Project mProject;
+    File selectedFile = null;
+
 
     private final static int PICK_FROM_ALBUM = 2000;
 
@@ -55,7 +66,7 @@ public class ProofActivity extends BaseActivity {
 
                 String content = binding.contentTxt.getText().toString();
 
-                ServerUtil.postRequestProjectProof(mContext, ContextUtil.getUserToken(mContext), projectId, content, new ServerUtil.JsonResponseHandler() {
+                ServerUtil.postRequestProjectProof(mContext, ContextUtil.getUserToken(mContext), projectId, content, selectedFile ,new ServerUtil.JsonResponseHandler() {
                     @Override
                     public void onResponse(JSONObject json) {
 
@@ -87,6 +98,8 @@ public class ProofActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+
+        setTitle("인증하기");
 
         projectId = getIntent().getIntExtra("project_id", -1);
 
@@ -137,7 +150,23 @@ public class ProofActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Uri imageUri = data.getData();
-        binding.proofImg.setImageURI(imageUri);
+                Uri imageUri = data.getData();
+                binding.proofImg.setImageURI(imageUri);
+                selectedFile = new File(getRealPathFromURI(imageUri));
+    }
+
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx); cursor.close();
+        }
+        return result;
+
     }
 }

@@ -106,6 +106,7 @@ public class ProjectDetailActivity extends BaseActivity {
         getProjectFromSever();
 
 
+
     }
 
     void getProjectFromSever() {
@@ -142,6 +143,8 @@ public class ProjectDetailActivity extends BaseActivity {
     void setProjectValueOnUi() {
 
         binding.projectTitleTxt.setText(mProject.getTitle());
+        setTitle(mProject.getTitle());
+
         Glide.with(mContext).load(mProject.getImgUrl()).into(binding.projectImg);
 
         binding.contentTxt.setText(mProject.getDescription());

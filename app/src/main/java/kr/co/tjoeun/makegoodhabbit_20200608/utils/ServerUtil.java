@@ -1,14 +1,17 @@
 package kr.co.tjoeun.makegoodhabbit_20200608.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import kr.co.tjoeun.makegoodhabbit_20200608.MainActivity;
 import kr.co.tjoeun.makegoodhabbit_20200608.datas.Project;
@@ -16,6 +19,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -38,6 +43,51 @@ public class ServerUtil {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/project/" + id).newBuilder();
+
+        String completeUrl = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(completeUrl)
+                .header("X-Http-token", ContextUtil.getUserToken(context))
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                String body = response.body().string();
+
+                try {
+                    JSONObject json = new JSONObject(body);
+
+                    if(handler != null) {
+                        handler.onResponse(json);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+    }
+
+
+    public static void getRequestReview (Context context, int pageNum, final JsonResponseHandler handler) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/review").newBuilder();
+        urlBuilder.addEncodedQueryParameter("page_num", pageNum + "");
 
         String completeUrl = urlBuilder.build().toString();
 
@@ -126,6 +176,49 @@ public class ServerUtil {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/project_proof/" + proofId).newBuilder();
+
+        String completeUrl = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(completeUrl)
+                .header("X-Http-token", ContextUtil.getUserToken(context))
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                String body = response.body().string();
+
+                try {
+                    JSONObject json = new JSONObject(body);
+
+                    if(handler != null) {
+                        handler.onResponse(json);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+    }
+
+    public static void getRequestUserInfo (Context context, final JsonResponseHandler handler) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/my_info").newBuilder();
 
         String completeUrl = urlBuilder.build().toString();
 
@@ -429,13 +522,15 @@ public class ServerUtil {
 
     }
 
-    public static void postRequestProjectProof(Context context, String token, int projectId, String content, final JsonResponseHandler handler) {
+    public static void postRequestProjectProof(Context context, String token, int projectId, String content, File proofImg, final JsonResponseHandler handler) {
 
         OkHttpClient client = new OkHttpClient();
 
-        RequestBody requestBody = new FormBody.Builder()
-                .add("project_id", projectId + "")
-                .add("content", content)
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("proof_images", proofImg.getName(), RequestBody.create(MediaType.parse("image/jpg"),proofImg))
+                .addFormDataPart("project_id", projectId+"")
+                .addFormDataPart("content", content)
                 .build();
 
         Request request = new Request.Builder()

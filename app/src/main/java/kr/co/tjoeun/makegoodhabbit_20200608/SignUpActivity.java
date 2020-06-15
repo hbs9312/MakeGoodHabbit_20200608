@@ -88,7 +88,7 @@ public class SignUpActivity extends BaseActivity {
 
     @Override
     public void setValues() {
-
+        setTitle("회원가입");
     }
 
     boolean checkPasswords() {
