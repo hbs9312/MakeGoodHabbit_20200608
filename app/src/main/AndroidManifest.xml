@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".WriteReviewActivity"></activity>
+        <activity android:name=".ViewOnGoingProjectActivity"></activity>
+        <activity android:name=".WriteReviewActivity" />
         <activity android:name=".ViewReviewDetailActivity" />
         <activity android:name=".ViewReviewActivity" />
         <activity android:name=".ProfileActivity" />

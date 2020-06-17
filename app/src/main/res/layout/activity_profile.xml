@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:padding="10dp"
         android:orientation="vertical"
-        android:gravity="bottom|center_horizontal"
+        android:gravity="center_horizontal"
         tools:context=".ProfileActivity">
 
         <LinearLayout
@@ -49,6 +49,18 @@
                 android:text="프로필 변경하기" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/showOnGoingProjectBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="진행중인 프로젝트" />
+
+        <Button
+            android:id="@+id/showDoneProjectBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="완료된 프로젝트" />
 
 
 

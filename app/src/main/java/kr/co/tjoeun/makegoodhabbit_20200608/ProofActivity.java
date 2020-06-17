@@ -52,9 +52,7 @@ public class ProofActivity extends BaseActivity {
         binding.uploadImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 goToAlbum();
-
             }
         });
 

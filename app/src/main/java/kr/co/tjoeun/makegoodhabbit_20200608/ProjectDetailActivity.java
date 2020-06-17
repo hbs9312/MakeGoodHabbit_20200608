@@ -97,16 +97,12 @@ public class ProjectDetailActivity extends BaseActivity {
 
     @Override
     public void setValues() {
-
         projectId = getIntent().getIntExtra("project_id", -1);
         if(projectId == -1) {
             Toast.makeText(mContext, "잘못된 접급입니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
         getProjectFromSever();
-
-
-
     }
 
     void getProjectFromSever() {
@@ -148,6 +144,10 @@ public class ProjectDetailActivity extends BaseActivity {
         Glide.with(mContext).load(mProject.getImgUrl()).into(binding.projectImg);
 
         binding.contentTxt.setText(mProject.getDescription());
+
+        if(mProject.isMyProject()) {
+            binding.applyBtn.setVisibility(View.GONE);
+        }
 
     }
 

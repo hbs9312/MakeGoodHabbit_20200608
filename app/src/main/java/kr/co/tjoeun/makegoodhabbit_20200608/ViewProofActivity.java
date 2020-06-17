@@ -55,7 +55,32 @@ public class ViewProofActivity extends BaseActivity {
     @Override
     public void setupEvents() {
 
-        binding.selectDateBtn.setOnClickListener(new View.OnClickListener() {
+        binding.prevDayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                cal.add(Calendar.DATE, -1);
+                String proofDateStr = sdf.format(cal.getTime());
+                binding.proofDateTxt.setText(proofDateStr);
+                getDateFromSever(proofDateStr);
+
+            }
+        });
+
+        binding.nextDayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                cal.add(Calendar.DATE, 1);
+                String proofDateStr = sdf.format(cal.getTime());
+                binding.proofDateTxt.setText(proofDateStr);
+                getDateFromSever(proofDateStr);
+                Log.d("날짜확인", cal.getTime().toString());
+
+            }
+        });
+
+        binding.proofDateTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mYear = cal.get(Calendar.YEAR);
@@ -64,6 +89,16 @@ public class ViewProofActivity extends BaseActivity {
                 showDate();
             }
         });
+
+//        binding.selectDateBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mYear = cal.get(Calendar.YEAR);
+//                mMonth = cal.get(Calendar.MONTH);
+//                mDay = cal.get(Calendar.DAY_OF_MONTH);
+//                showDate();
+//            }
+//        });
 
         binding.proofByDateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,8 +115,6 @@ public class ViewProofActivity extends BaseActivity {
     @Override
     public void setValues() {
 
-
-
         projectId = getIntent().getIntExtra("projectId", -1);
         projectTitle = getIntent().getStringExtra("projectTitle");
 //        binding.projectTitleTxt.setText(projectTitle);
@@ -91,8 +124,9 @@ public class ViewProofActivity extends BaseActivity {
 
         prAdapter = new ProofAdapter(mContext,R.layout.proof_list_item, proofList);
         binding.proofByDateListView.setAdapter(prAdapter);
+//        showDate();
+        binding.proofDateTxt.setText(sdf.format(cal.getTime()));
 
-        showDate();
     }
 
     void showDate(){
@@ -101,10 +135,10 @@ public class ViewProofActivity extends BaseActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 Log.d("날짜 취소", String.format("%d, %d, %d,", year, month, dayOfMonth));
-                Calendar selectedDate = Calendar.getInstance();
-                selectedDate.set(year, month, dayOfMonth);
-                String dateStr = sdf.format(selectedDate.getTime());
+                cal.set(year,month,dayOfMonth);
+                String dateStr = sdf.format(cal.getTime());
                 getDateFromSever(dateStr);
+                binding.proofDateTxt.setText(dateStr);
 
             }
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
@@ -139,6 +173,7 @@ public class ViewProofActivity extends BaseActivity {
                         @Override
                         public void run() {
                             prAdapter.notifyDataSetChanged();
+                            binding.proofDateTxt.setText(sdf.format(cal.getTime()));
                         }
                     });
 

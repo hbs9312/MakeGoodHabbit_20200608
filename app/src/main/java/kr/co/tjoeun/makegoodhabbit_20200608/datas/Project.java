@@ -10,6 +10,7 @@ public class Project {
     private String imgUrl;
     private String description;
     private boolean isJoin;
+    private boolean isMyProject;
 
     public static Project getProjectFromJson(JSONObject jsonObject) {
         Project project = new Project();
@@ -19,6 +20,7 @@ public class Project {
             project.title = jsonObject.getString("title");
             project.imgUrl = jsonObject.getString("img_url");
             project.description = jsonObject.getString("description");
+            project.isMyProject = jsonObject.getBoolean("is_my_project");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -75,5 +77,9 @@ public class Project {
 
     public void setJoin(boolean join) {
         isJoin = join;
+    }
+
+    public boolean isMyProject() {
+        return isMyProject;
     }
 }
